@@ -1,0 +1,29 @@
+concurrent = 1
+check_interval = 0
+connection_max_age = "15m0s"
+shutdown_timeout = 0
+log_level = "debug"
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "（incus remote add コマンドで追加したリモートホスト名）"
+  url = "https://（gitlabのFQDN）:（設定したport番号）"
+  id = （GitLab Runnerに設定されているID）
+  token = "（incus remote設定を行ったときに払い出されるtoken）"
+  token_obtained_at = 2025-07-30T13:09:40Z
+  token_expires_at = 0001-01-01T00:00:00Z
+  tls-cert-file = "/etc/gitlab-runner/certs/（gitlab certeficate）.crt"
+  executor = "custom"
+  builds_dir = "/builds"
+  cache_dir = "/cache"
+  [runners.cache]
+    MaxUploadedArchiveSize = 0
+    [runners.cache.s3]
+    [runners.cache.gcs]
+    [runners.cache.azure]
+  [runners.custom]
+    prepare_exec = "/opt/incus-driver/prepare.sh" # Path to a bash script to create lxd container and download dependencies.
+    run_exec = "/opt/incus-driver/run.sh" # Path to a bash script to run script inside the container.
+    cleanup_exec = "/opt/incus-driver/cleanup.sh" # Path to bash script to delete container.
